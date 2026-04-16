@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "52742235811",
+    "project_id": "kampusatikyonetimsistemi-dca93",
+    "storage_bucket": "kampusatikyonetimsistemi-dca93.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:52742235811:android:22df6bd9afd025b6d74116",
+        "android_client_info": {
+          "package_name": "com.kampus.kampusatikyonetimsistemi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFJ-gsysNIMBkEKiZZWIJND222iDbOnY4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
