@@ -1,7 +1,8 @@
-package com.kampus.kampusatikyonetimsistemi
+package com.kampus.kampusatikyonetimsistemi.service
 
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.kampus.kampusatikyonetimsistemi.util.sendNotification
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
@@ -11,6 +12,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         remoteMessage.notification?.let {
             // Daha önce yazdığımız sendNotification fonksiyonunu çağırıyoruz
+            // Bu fonksiyon util/NotificationUtils.kt içinde olduğu için otomatik tanınacaktır
             sendNotification(
                 applicationContext,
                 it.title ?: "Kritik Durum",
@@ -22,6 +24,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     // Cihaza özel yeni bir token oluştuğunda (Firebase ile cihazı eşlemek için)
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-        // Bu token'ı ileride belirli bir çalışana bildirim atmak için kullanabiliriz
+        // Bu token'ı veritabanına kaydederek belirli kullanıcılara hedefli bildirimler atabilirsin
     }
 }
