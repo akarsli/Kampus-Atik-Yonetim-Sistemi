@@ -106,8 +106,30 @@ fun MainScreen() {
             navController = navController,
             startDestination = Screen.Dashboard.route,
             modifier = Modifier.fillMaxSize(),
-            enterTransition = { slideInHorizontally { 1000 } + fadeIn() },
-            exitTransition = { slideOutHorizontally { -1000 } + fadeOut() }
+            enterTransition = {
+                val targetIdx = navItems.find { it.route == targetState.destination.route }?.index ?: 0
+                val initialIdx = navItems.find { it.route == initialState.destination.route }?.index ?: 0
+
+                if (targetIdx > initialIdx) {
+                    // Sağdaki menüye gidiş: İçerik sağdan gelsin
+                    slideInHorizontally { it } + fadeIn()
+                } else {
+                    // Soldaki menüye gidiş: İçerik soldan gelsin
+                    slideInHorizontally { -it } + fadeIn()
+                }
+            },
+            exitTransition = {
+                val targetIdx = navItems.find { it.route == targetState.destination.route }?.index ?: 0
+                val initialIdx = navItems.find { it.route == initialState.destination.route }?.index ?: 0
+
+                if (targetIdx > initialIdx) {
+                    // Mevcut ekran sola kayarak çıksın
+                    slideOutHorizontally { -it } + fadeOut()
+                } else {
+                    // Mevcut ekran sağa kayarak çıksın
+                    slideOutHorizontally { it } + fadeOut()
+                }
+            }
         ) {
             composable(Screen.Dashboard.route) { DashboardContent(binList = binList) }
             composable(Screen.Map.route) { MapScreen(binList = binList) }

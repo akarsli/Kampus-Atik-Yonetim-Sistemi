@@ -34,7 +34,7 @@ fun DashboardContent(binList: List<BinData>) {
     val currentContext = LocalContext.current
     val internalBinList = remember { mutableStateListOf<BinData>() }
 
-    var selectedStatusFilter by remember { mutableStateOf(FilterType.CRITICAL) }
+    var selectedStatusFilter by remember { mutableStateOf(FilterType.ALL) }
     var isMenuExpanded by remember { mutableStateOf(false) }
 
     val buildingList = listOf("Tümü", "Kütüphane", "Yemekhane", "B Blok", "C Blok")
@@ -65,6 +65,10 @@ fun DashboardContent(binList: List<BinData>) {
                     }
                 }
 
+                if (hasCriticalBin && selectedStatusFilter == FilterType.ALL) {
+                    selectedStatusFilter = FilterType.CRITICAL
+                }
+
                 if (hasCriticalBin) {
                     val currentTime = System.currentTimeMillis()
                     val fiveMinutesInMillis = 5 * 60 * 1000
@@ -72,7 +76,7 @@ fun DashboardContent(binList: List<BinData>) {
 
                     if (currentTime - lastNotificationTime > fiveMinutesInMillis) {
                         if (isNotificationEnabled) {
-                            sendNotification(currentContext, "Kampüs Akıllı Takip", "Bazı çöp kutuları doldu! Lütfen kontrol edin.")
+                            sendNotification(currentContext, "Kampüs Atık Yönetim Sistemi", "Bazı çöp kutuları doldu! Lütfen kontrol edin.")
                             lastNotificationTime = currentTime
                             sharedPrefs.edit().putLong("last_time", currentTime).apply()
                         }
@@ -99,12 +103,12 @@ fun DashboardContent(binList: List<BinData>) {
 
     Column(modifier = Modifier.fillMaxSize()) {
         CenterAlignedTopAppBar(
-            title = { Text("CampusFlow", fontWeight = FontWeight.ExtraBold, color = Color(0xFF2E7D32)) },
+            title = { Text("Kampüs Atık Yönetim Sistemi", fontWeight = FontWeight.ExtraBold, color = Color(0xFF2E7D32)) },
             actions = {
                 IconButton(onClick = {
                     val fullBins = internalBinList.filter { it.fillLevel > 80 }
                     if (fullBins.isNotEmpty()) {
-                        sendNotification(currentContext, "Kritik Doluluk!", "${fullBins.size} adet kutu %80'i geçti.")
+                        sendNotification(currentContext, "Kampüs Atık Yönetim Sistemi", "${fullBins.size} adet kutu %80'i geçti.")
                     }
                 }) {
                     Icon(Icons.Default.Notifications, null, tint = Color(0xFF2E7D32))
@@ -144,7 +148,7 @@ fun DashboardContent(binList: List<BinData>) {
                                 Icon(if (isMenuExpanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown, null, modifier = Modifier.size(18.dp))
                             }
                         }
-                        DropdownMenu(expanded = isMenuExpanded, onDismissRequest = { isMenuExpanded = false }) {
+                        DropdownMenu(expanded = isMenuExpanded, onDismissRequest = { isMenuExpanded = false }, Modifier.background(color = Color.White)) {
                             FilterType.entries.forEach { filter ->
                                 DropdownMenuItem(
                                     text = { Text(filter.label) },

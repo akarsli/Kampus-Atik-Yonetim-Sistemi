@@ -1,5 +1,6 @@
 package com.kampus.kampusatikyonetimsistemi.ui.screens
 
+import android.R
 import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -78,7 +79,7 @@ fun ProfileScreen(binList: List<BinData>) {
 
         // Versiyon Bilgileri (Navigasyon barın hemen üstünde duracak)
         Text(
-            text = "Versiyon 1.0.0",
+            text = "Versiyon 1.1.0",
             fontSize = 12.sp,
             fontWeight = FontWeight.Medium,
             color = Color.Gray
