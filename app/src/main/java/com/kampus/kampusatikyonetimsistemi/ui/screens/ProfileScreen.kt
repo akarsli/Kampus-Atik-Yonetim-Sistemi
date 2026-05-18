@@ -19,9 +19,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kampus.kampusatikyonetimsistemi.model.BinData
+import com.kampus.kampusatikyonetimsistemi.model.WorkerData
 
 @Composable
-fun ProfileScreen(binList: List<BinData>) {
+fun ProfileScreen(binList: List<BinData>, userFullName: String, onLogout: () -> Unit) {
     val context = LocalContext.current
     val sharedPrefs = remember { context.getSharedPreferences("NotificationPrefs", Context.MODE_PRIVATE) }
 
@@ -42,7 +43,7 @@ fun ProfileScreen(binList: List<BinData>) {
             Icon(Icons.Default.Person, null, modifier = Modifier.size(50.dp), tint = Color(0xFF2E7D32))
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Text("Abdulkadir Karslı", fontSize = 22.sp, fontWeight = FontWeight.Bold)
+        Text(userFullName, fontSize = 22.sp, fontWeight = FontWeight.Bold)
 
         Spacer(modifier = Modifier.height(32.dp))
 
@@ -71,7 +72,7 @@ fun ProfileScreen(binList: List<BinData>) {
             }
             ProfileMenuItem(icon = Icons.Default.Settings, label = "Uygulama Tercihleri", onClick = { showThemeDialog = true })
             ProfileMenuItem(icon = Icons.Default.Info, label = "Sistem Durumu")
-            ProfileMenuItem(icon = Icons.Default.ExitToApp, label = "Çıkış Yap", isLast = true)
+            ProfileMenuItem(icon = Icons.Default.ExitToApp, label = "Çıkış Yap", isLast = true, onClick = { onLogout() })
         }
 
         // --- DEĞİŞİKLİK BURADA: Üst tarafı aşağıdan ayırır ---

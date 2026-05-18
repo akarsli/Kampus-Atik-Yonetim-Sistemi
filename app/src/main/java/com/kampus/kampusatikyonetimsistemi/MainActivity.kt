@@ -23,6 +23,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,6 +39,7 @@ import com.google.firebase.database.ValueEventListener
 import com.kampus.kampusatikyonetimsistemi.model.BinData
 import com.kampus.kampusatikyonetimsistemi.model.Screen
 import com.kampus.kampusatikyonetimsistemi.ui.screens.DashboardContent
+import com.kampus.kampusatikyonetimsistemi.ui.screens.LoginScreen
 import com.kampus.kampusatikyonetimsistemi.ui.screens.MapScreen
 import com.kampus.kampusatikyonetimsistemi.ui.screens.ProfileScreen
 
@@ -51,9 +53,41 @@ class MainActivity : ComponentActivity() {
         window.statusBarColor = android.graphics.Color.TRANSPARENT
         window.navigationBarColor = android.graphics.Color.TRANSPARENT
 
+        // MainActivity.kt içindeki setContent bloğunu şu şekilde güncelle:
         setContent {
-            MaterialTheme {
-                MainScreen()
+            val context = LocalContext.current
+            val sharedPrefs = remember { context.getSharedPreferences("NotificationPrefs", Context.MODE_PRIVATE) }
+
+            var isDarkMode by remember { mutableStateOf(sharedPrefs.getBoolean("dark_mode", false)) }
+            var isUserLoggedIn by remember { mutableStateOf(false) }
+
+            // GİRİŞ YAPAN KULLANICININ ADINI TUTAN STATE
+            var loggedInUserFullName by remember { mutableStateOf("") }
+
+            val colorScheme = if (isDarkMode) {
+                darkColorScheme(primary = Color(0xFF81C784), background = Color(0xFF121212), surface = Color(0xFF1E1E1E))
+            } else {
+                lightColorScheme(primary = Color(0xFF2E7D32), background = Color(0xFFF8F9FA), surface = Color.White)
+            }
+
+            MaterialTheme(colorScheme = colorScheme) {
+                if (isUserLoggedIn) {
+                    MainScreen(
+                        userFullName = loggedInUserFullName, // İsmi buraya gönderdik
+                        onLogout = {
+                            isUserLoggedIn = false // Çıkış yapıldığında kullanıcıyı tekrar login ekranına fırlatır
+                            loggedInUserFullName = "" // Güvenlik için ismi temizler
+                        }
+                    )
+                } else {
+                    LoginScreen(
+                        onLoginSuccess = { fullName ->
+                            loggedInUserFullName = fullName // Giriş başarılı olunca adı kaydet
+                            isUserLoggedIn = true
+                        },
+                        isDarkMode = isDarkMode
+                    )
+                }
             }
         }
     }
@@ -77,7 +111,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainScreen() {
+fun MainScreen(userFullName: String, onLogout: () -> Unit) {
     val navController = rememberNavController()
     val navItems = listOf(Screen.Dashboard, Screen.Map, Screen.Profile)
     val binList = remember { mutableStateListOf<BinData>() }
@@ -133,7 +167,7 @@ fun MainScreen() {
         ) {
             composable(Screen.Dashboard.route) { DashboardContent(binList = binList) }
             composable(Screen.Map.route) { MapScreen(binList = binList) }
-            composable(Screen.Profile.route) { ProfileScreen(binList = binList) }
+            composable(Screen.Profile.route) { ProfileScreen(binList = binList, userFullName = userFullName, onLogout = onLogout) }
         }
 
         // Liquid Glass Bar

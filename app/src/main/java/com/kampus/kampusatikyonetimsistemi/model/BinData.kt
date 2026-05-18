@@ -27,3 +27,10 @@ sealed class Screen(val route: String, val title: String, val icon: ImageVector,
     object Map : Screen("map", "Harita", Icons.Default.LocationOn, 1)
     object Profile : Screen("profile", "Profil", Icons.Default.Person, 2)
 }
+
+data class WorkerData(
+    val id: Int = 0,
+    val username: String = "",
+    val password: String = "",
+    val fullName: String = ""
+)
