@@ -1,4 +1,4 @@
-# 🍃 CampusFlow - Akıllı Kampüs Atık Yönetim Sistemi
+# 🍃 Akıllı Kampüs Atık Yönetim Sistemi
 
 CampusFlow, üniversite kampüslerindeki katı atık yönetim süreçlerini optimize etmek, iş gücü verimliliğini artırmak ve karbon emisyonunu azaltmak amacıyla geliştirilmiş **uçtan uca (End-to-End) bir IoT ve Mobil/Web ekosistemidir.**
 
