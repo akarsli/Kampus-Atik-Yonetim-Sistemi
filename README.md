@@ -63,7 +63,7 @@ String firebaseUrl = "https://kampusatikyonetimsistemi-dca93-default-rtdb.europe
 #### 2.Mobil Uygulama Kurulumu
 1. Bu repoyu bilgisayarınıza klonlayın:
 ```text
-     git clone [https://github.com/akarsli/Kampus-Atik-Yonetim-Sistemi.git](https://github.com/akarsli/Kampus-Atik-Yonetim-Sistemi.git)
+git clone [https://github.com/akarsli/Kampus-Atik-Yonetim-Sistemi.git](https://github.com/akarsli/Kampus-Atik-Yonetim-Sistemi.git)
 ```
 
 2. Projeyi **Android Studio** ile açın
