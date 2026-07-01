@@ -56,7 +56,6 @@ app/src/main/java/com/kampus/kampusatikyonetimsistemi/
 1. `diagram.json` ve ESP32 kaynak kodlarını **Wokwi** üzerinden açın.
 2. Firebase Realtime Database URL'nizi koda entegre edin:
 ```text
-````cpp`
 String firebaseUrl = "https://kampusatikyonetimsistemi-dca93-default-rtdb.europe-west1.firebasedatabase.app/bins/bin_1.json";
 ```
 3. Simülasyonu başlatın. Sensör üzerindeki mesafe çubuğunu oynatarak veri akışını test edin.
@@ -64,7 +63,6 @@ String firebaseUrl = "https://kampusatikyonetimsistemi-dca93-default-rtdb.europe
 #### 2.Mobil Uygulama Kurulumu
 1. Bu repoyu bilgisayarınıza klonlayın:
 ```text
-````bash`
      git clone [https://github.com/akarsli/Kampus-Atik-Yonetim-Sistemi.git](https://github.com/akarsli/Kampus-Atik-Yonetim-Sistemi.git)
 ```
 
