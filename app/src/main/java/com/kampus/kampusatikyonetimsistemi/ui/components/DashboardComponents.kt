@@ -24,7 +24,6 @@ fun SummaryCard(fullCount: Int) {
                 Text("Kritik Durum", color = Color.Gray, fontSize = 13.sp)
                 Text(if (fullCount > 0) "$fullCount Kutu Dolu!" else "Her Şey Temiz", fontSize = 20.sp, fontWeight = FontWeight.ExtraBold, color = if (fullCount > 0) Color(0xFFEF5350) else Color(0xFF2E7D32))
             }
-            Button(onClick = {}, enabled = fullCount > 0, colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2E7D32))) { Text("Rota Çiz") }
         }
     }
 }
